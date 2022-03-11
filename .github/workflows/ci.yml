@@ -16,7 +16,7 @@ jobs:
     - name: dependencies
       run: sudo apt-get install libpcaudio-dev libsonic-dev ronn kramdown
     - name: autoconf
-      run: ./autogen.sh
+      run: ./autogen.sh ; chmod -x INSTALL ; chmod -x m4/*.m4
     - name: configure
       run: ./configure
     - name: make
