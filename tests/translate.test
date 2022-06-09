@@ -84,8 +84,18 @@ test_phon en "r'oUlIN 0nD@ fl'o@ l'aafIN" "🤣" # skip words
 test_phon sk "sm'eju:tsa s'a tv'a:R" "☺"
 test_phon sk "bl'ax sm'eju:tsa s'a tv'a:R" "blah ☺"
 
+# bug: https://github.com/espeak-ng/espeak-ng/issues/307
 # bug: https://github.com/espeak-ng/espeak-ng/issues/853
+# bug: https://github.com/espeak-ng/espeak-ng/issues/874
 test_phon fr "profEs'Wr" "PR"
+test_phon fr "sap'E~ d@- nO'El" "🎄"
+
+# FIXME!!
+test_phon fr "(en)kr'Ism@skr'Ism@s(fr)" "🎄🎄"
+test_phon en "m'eIlm'eIl" "♂♂"
+test_phon fr "sE~b'OlsE~b'Ol" "♂♂"
+test_phon fr "sE~b'Ol(base) @@@ @@@ @@@" "© 2020"
+test_phon fr "sE~b'Ol(base)" "©"
 
 # https://github.com/espeak-ng/espeak-ng/pull/1148
 test_phon fr "dY mil v'E~" "2020"
