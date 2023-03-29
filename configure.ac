@@ -138,14 +138,23 @@ fi
 
 AC_LANG_PUSH(C)
 TEMP_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS -fsanitize=fuzzer"
+TEMP_LIBS="$LIBS"
+HOST_CPU="`$CC -print-multiarch | sed -e 's/-.*//'`"
+LIBFUZZER_NO_MAIN="`$CC -print-runtime-dir`/libclang_rt.fuzzer_no_main-$HOST_CPU.a -lstdc++ -lm"
+CFLAGS="$CFLAGS -fsanitize=fuzzer-no-link"
+LIBS="$LIBS $LIBFUZZER_NO_MAIN"
 AC_MSG_CHECKING([if $CC supports fuzzer with the -fsanitize=fuzzer flag])
 AC_COMPILE_IFELSE(
 	[AC_LANG_PROGRAM( [[]], [[]])],
 	[have_fuzzer_fuzzer=yes],
 	[have_fuzzer_fuzzer=no])
 AC_MSG_RESULT($have_fuzzer_fuzzer)
-CFLAGS="$TEMP_CFLAGS"
+if test "$have_fuzzer_fuzzer" != yes ; then
+	CFLAGS="$TEMP_CFLAGS"
+	LIBFUZZER_NO_MAIN=""
+fi
+AC_SUBST(LIBFUZZER_NO_MAIN)
+LIBS="$TEMP_LIBS"
 AC_LANG_POP(C)
 
 dnl ================================================================
